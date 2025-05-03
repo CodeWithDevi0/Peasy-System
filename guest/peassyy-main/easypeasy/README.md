@@ -1,2 +1,0 @@
-# easypeasy
- pEasy github upload
