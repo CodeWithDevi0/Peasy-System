@@ -143,7 +143,7 @@ require_once '../database/config.php';
                             <th class="py-3">Brand</th>
                             <th class="py-3">Category</th>
                             <th class="py-3">Stocks</th>
-                            <th class="py-3 text-end pe-4">Status</th>
+                            <th class="py-3 text-center pe-4">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -171,7 +171,7 @@ require_once '../database/config.php';
                                     <td>{$row['brand_name']}</td>
                                     <td>{$row['category_name']}</td>
                                     <td>{$row['stocks']}</td>
-                                    <td class='text-end pe-4'>
+                                    <td class='text-center pe-3'>
                                         {$stockStatus}
                                     </td>
                                 </tr>";
