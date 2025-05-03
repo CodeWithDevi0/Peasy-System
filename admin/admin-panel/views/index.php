@@ -1,3 +1,7 @@
+<?php
+session_start();
+require_once '../database/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,7 +105,10 @@
                     </div>
                     <div>
                         <h6 class="card-title text-muted mb-1">Total Products</h6>
-                        <h4 class="mb-0 text-success">269</h4>
+                        <?php
+                        $productCount = $pdo->query("SELECT COUNT(*) FROM products")->fetchColumn();
+                        ?>
+                        <h4 class="mb-0 text-success"><?php echo $productCount; ?></h4>
                     </div>
                 </div>
             </div>
@@ -140,36 +147,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="ps-4">1</td>
-                            <td>Ryzen 5 5600g</td>
-                            <td>AMD</td>
-                            <td>Processor</td>
-                            <td>25/100</td>
-                            <td class="text-end pe-4">
-                                <span class="badge bg-success">In Stock</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="ps-4">2</td>
-                            <td>Ryzen 7 5700g</td>
-                            <td>AMD</td>
-                            <td>Processor</td>
-                            <td>69/100</td>
-                            <td class="text-end pe-4">
-                                <span class="badge bg-success">In Stock</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="ps-4">3</td>
-                            <td>Ryzen 9 5700</td>
-                            <td>AMD</td>
-                            <td>Processor</td>
-                            <td>71/100</td>
-                            <td class="text-end pe-4">
-                                <span class="badge bg-success">In Stock</span>
-                            </td>
-                        </tr>
+                        <?php
+                        require_once '../database/config.php';
+                        
+                        // Get recent products with brand and category names
+                        $stmt = $pdo->query("
+                            SELECT p.product_id, p.product_name, b.brand_name, c.category_name, p.stocks, p.status 
+                            FROM products p
+                            LEFT JOIN brands b ON p.brand_id = b.brand_id
+                            LEFT JOIN categories c ON p.category_id = c.category_id
+                            ORDER BY p.created_at DESC
+                            LIMIT 5
+                        ");
+
+                        while ($row = $stmt->fetch()) {
+                            $stockStatus = ($row['stocks'] > 0) ? 
+                                '<span class="badge bg-success">In Stock</span>' : 
+                                '<span class="badge bg-danger">Out of Stock</span>';
+                                
+                            echo "<tr>
+                                    <td class='ps-4'>#{$row['product_id']}</td>
+                                    <td>{$row['product_name']}</td>
+                                    <td>{$row['brand_name']}</td>
+                                    <td>{$row['category_name']}</td>
+                                    <td>{$row['stocks']}</td>
+                                    <td class='text-end pe-4'>
+                                        {$stockStatus}
+                                    </td>
+                                </tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
