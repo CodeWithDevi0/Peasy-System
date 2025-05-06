@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Product not found");
         }
 
-        // Build update query
-        // The trigger will handle the inventory logging automatically
+        
+        // [Update Query] The trigger will handle the inventory logging automatically
         $stmt = $pdo->prepare("
             UPDATE products 
             SET product_name = :name,

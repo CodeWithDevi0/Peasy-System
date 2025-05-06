@@ -166,7 +166,7 @@ require_once '../database/config.php';
                                 '<span class="badge bg-danger">Out of Stock</span>';
                                 
                             echo "<tr>
-                                    <td class='ps-4'>#{$row['product_id']}</td>
+                                    <td class='ps-4 text-success'>{$row['product_id']}</td>
                                     <td>{$row['product_name']}</td>
                                     <td>{$row['brand_name']}</td>
                                     <td>{$row['category_name']}</td>
@@ -203,7 +203,7 @@ require_once '../database/config.php';
                 <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
                     <i class="bi bi-x-lg me-2"></i>Cancel
                 </button>
-                <a href="../../../guest/peassyy-main/easypeasy/home.php" class="btn btn-danger">
+                <a href="../../../guest/sample.php" class="btn btn-danger">
                     <i class="bi bi-check-lg me-2"></i>Yes, Sign Out
                 </a>
             </div>
@@ -226,7 +226,7 @@ require_once '../database/config.php';
 
     data.forEach(item => {
         const heightPercent = (item.value / maxVal) * 100;
-        const height = (heightPercent * (chart.clientHeight - 60)) / 100; // Subtract space for labels
+        const height = (heightPercent * (chart.clientHeight - 60)) / 100; 
 
         const barItem = document.createElement("div");
         barItem.className = "bar-item";
