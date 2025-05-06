@@ -1,0 +1,253 @@
+-- Drop existing database and create new one
+DROP DATABASE IF EXISTS db_peasy;
+CREATE DATABASE db_peasy;
+USE db_peasy;
+
+-- Create brands table
+CREATE TABLE brands (
+    brand_id INT PRIMARY KEY AUTO_INCREMENT,
+    brand_name VARCHAR(100) UNIQUE NOT NULL,
+    status BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create categories table
+CREATE TABLE categories (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(100) UNIQUE NOT NULL,
+    status BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create products table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(100) UNIQUE NOT NULL,
+    brand_id INT,
+    category_id INT,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    stocks INT NOT NULL DEFAULT 0,
+    image_path VARCHAR(255),
+    status BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (brand_id) REFERENCES brands(brand_id) ON DELETE SET NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE SET NULL
+);
+
+-- Create inventory_logs table
+CREATE TABLE inventory_logs (
+    log_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT,
+    action_type ENUM('ADD', 'UPDATE', 'DELETE') NOT NULL,
+    stocks INT NOT NULL,
+    action_by VARCHAR(50),
+    action_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE SET NULL
+);
+
+-- Create simple trigger for inventory logging
+DELIMITER $$
+
+CREATE TRIGGER after_product_insert
+AFTER INSERT ON products
+FOR EACH ROW
+BEGIN
+    INSERT INTO inventory_logs (
+        product_id,
+        action_type,
+        stocks,
+        action_by,
+        action_date
+    ) VALUES (
+        NEW.product_id,
+        'ADD',
+        NEW.stocks,
+        CURRENT_USER(),
+        NOW()
+    );
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+-- Drop existing triggers and procedures
+DROP TRIGGER IF EXISTS after_product_insert;
+DROP TRIGGER IF EXISTS tr_product_inventory_update;
+DROP TRIGGER IF EXISTS tr_product_delete;
+DROP PROCEDURE IF EXISTS sp_add_product;
+DROP PROCEDURE IF EXISTS sp_update_product;
+DROP PROCEDURE IF EXISTS sp_delete_product;
+
+DELIMITER $$
+
+-- Trigger for new product insertion
+CREATE TRIGGER after_product_insert
+AFTER INSERT ON products
+FOR EACH ROW
+BEGIN
+    INSERT INTO inventory_logs (
+        product_id,
+        action_type,
+        stocks,
+        action_by,
+        action_date
+    ) VALUES (
+        NEW.product_id,
+        'ADD',
+        NEW.stocks,
+        CURRENT_USER(),
+        NOW()
+    );
+END$$
+
+-- Trigger for product updates
+CREATE TRIGGER tr_product_inventory_update
+AFTER UPDATE ON products
+FOR EACH ROW
+BEGIN
+    IF OLD.stocks != NEW.stocks THEN
+        INSERT INTO inventory_logs (
+            product_id,
+            action_type,
+            stocks,
+            action_by,
+            action_date
+        ) VALUES (
+            NEW.product_id,
+            'UPDATE',
+            NEW.stocks,
+            CURRENT_USER(),
+            NOW()
+        );
+    END IF;
+END$$
+
+-- Trigger for product deletion
+CREATE TRIGGER tr_product_delete
+BEFORE DELETE ON products
+FOR EACH ROW
+BEGIN
+    INSERT INTO inventory_logs (
+        product_id,
+        action_type,
+        stocks,
+        action_by,
+        action_date
+    ) VALUES (
+        OLD.product_id,
+        'DELETE',
+        0,
+        CURRENT_USER(),
+        NOW()
+    );
+END$$
+
+-- Stored procedure for adding products
+CREATE PROCEDURE sp_add_product(
+    IN p_product_name VARCHAR(100),
+    IN p_brand_id INT,
+    IN p_category_id INT,
+    IN p_description TEXT,
+    IN p_price DECIMAL(10,2),
+    IN p_stocks INT,
+    IN p_image_path VARCHAR(255),
+    OUT p_product_id INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error adding product';
+    END;
+
+    START TRANSACTION;
+    
+    INSERT INTO products (
+        product_name,
+        brand_id,
+        category_id,
+        description,
+        price,
+        stocks,
+        image_path,
+        status
+    ) VALUES (
+        p_product_name,
+        p_brand_id,
+        p_category_id,
+        p_description,
+        p_price,
+        p_stocks,
+        p_image_path,
+        1
+    );
+    
+    SET p_product_id = LAST_INSERT_ID();
+    
+    COMMIT;
+END$$
+
+-- Stored procedure for updating products
+CREATE PROCEDURE sp_update_product(
+    IN p_product_id INT,
+    IN p_product_name VARCHAR(100),
+    IN p_brand_id INT,
+    IN p_category_id INT,
+    IN p_description TEXT,
+    IN p_price DECIMAL(10,2),
+    IN p_stocks INT,
+    IN p_image_path VARCHAR(255)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error updating product';
+    END;
+
+    START TRANSACTION;
+    
+    UPDATE products 
+    SET product_name = p_product_name,
+        brand_id = p_brand_id,
+        category_id = p_category_id,
+        description = p_description,
+        price = p_price,
+        stocks = p_stocks,
+        image_path = COALESCE(p_image_path, image_path)
+    WHERE product_id = p_product_id;
+    
+    COMMIT;
+END$$
+
+-- Stored procedure for deleting products
+CREATE PROCEDURE sp_delete_product(
+    IN p_product_id INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error deleting product';
+    END;
+
+    START TRANSACTION;
+    
+    -- Delete from inventory_logs first
+    DELETE FROM inventory_logs 
+    WHERE product_id = p_product_id;
+    
+    -- Then delete the product
+    DELETE FROM products 
+    WHERE product_id = p_product_id;
+    
+    COMMIT;
+END$$
+
+DELIMITER ;
