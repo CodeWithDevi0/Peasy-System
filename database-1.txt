@@ -47,35 +47,6 @@ CREATE TABLE inventory_logs (
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE SET NULL
 );
 
--- Create simple trigger for inventory logging
-DELIMITER $$
-
-CREATE TRIGGER after_product_insert
-AFTER INSERT ON products
-FOR EACH ROW
-BEGIN
-    INSERT INTO inventory_logs (
-        product_id,
-        action_type,
-        stocks,
-        action_by,
-        action_date
-    ) VALUES (
-        NEW.product_id,
-        'ADD',
-        NEW.stocks,
-        CURRENT_USER(),
-        NOW()
-    );
-END$$
-
-DELIMITER ;
-
-
-
-
-
-
 -- Drop existing triggers and procedures
 DROP TRIGGER IF EXISTS after_product_insert;
 DROP TRIGGER IF EXISTS tr_product_inventory_update;
