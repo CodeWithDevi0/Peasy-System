@@ -54,9 +54,9 @@
       </ul>
     </li>
     <li class="nav-item mt-auto">
-      <button class="btn btn-outline-light m-3" type="submit">
-        <i class="bi bi-box-arrow-right me-2"></i>Sign out
-      </button>
+        <button class="btn btn-outline-light m-3" data-bs-toggle="modal" data-bs-target="#signOutModal">
+            <i class="bi bi-box-arrow-right me-2"></i>Sign out
+        </button>
     </li>
   </ul>
 </div>
@@ -271,6 +271,33 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Out Confirmation Modal -->
+<div class="modal fade" id="signOutModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Sign Out Confirmation</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <div class="mb-4">
+                    <i class="bi bi-question-circle text-success" style="font-size: 3rem;"></i>
+                </div>
+                <h5 class="mb-3">Are you sure you want to sign out?</h5>
+                <p class="text-muted mb-0">You will be redirected to the home page.</p>
+            </div>
+            <div class="modal-footer border-top-0">
+                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg me-2"></i>Cancel
+                </button>
+                <a href="../../../guest/sample.php" class="btn btn-danger">
+                    <i class="bi bi-check-lg me-2"></i>Yes, Sign Out
+                </a>
             </div>
         </div>
     </div>

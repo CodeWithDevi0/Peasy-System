@@ -2,12 +2,12 @@
 require_once '../database/database.php';
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    die("User not logged in.");
-}
+// if (!isset($_SESSION['user_id'])) {
+//     die("User not logged in.");
+// }
 
 $conn = getDBConnection();
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'] ?? '';
 $firstname = $_SESSION['user_firstname'] ?? 'Guest';
 $lastname = $_SESSION['user_lastname'] ?? 'Guest';
 $username = $_SESSION['user_username'] ?? 'Guest';
