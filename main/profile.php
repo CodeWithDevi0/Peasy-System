@@ -21,14 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['address'], $_POST['co
     $address = $_POST['address'];
     $contact_number = $_POST['contact_number'];
 
-    // First, check if profile exists for this user
     $stmt = $conn->prepare("SELECT id FROM users_profile WHERE users_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Update existing profile
+
         $stmt = $conn->prepare("UPDATE users_profile SET address = ?, contact_number = ? WHERE users_id = ?");
         $stmt->bind_param("ssi", $address, $contact_number, $user_id);
         $stmt->execute();

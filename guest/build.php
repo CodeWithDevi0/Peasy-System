@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Peasy </title>
     <link rel="stylesheet" href="index.css">
-    <!-- <link rel="stylesheet" href="../main/profile.js"> -->
+    <link rel="stylesheet" href="../main/profile.js">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -13,18 +13,17 @@
 <body> 
 <nav class="navbar navbar-expand-lg bg-success px-4 py-2">
   <div class="container-fluid">
-    <!-- Logo and Brand -->
+
     <a class="navbar-brand d-flex align-items-center text-white" href="#">
       <img src="../assets/nobg.png" alt="Logo" width="60" height="60" class="me-2">
       <strong>PEasy</strong>
     </a>
 
-    <!-- Toggler for mobile -->
+
     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Right Nav Icons -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav align-items-center">
         <li class="nav-item mx-2">
@@ -72,7 +71,7 @@
 
 <div class="container my-4 py-4">
   <div class="row">
-    <!-- Left Panel: Radar + Selected Components -->
+
     <div class="col-md-4 bg-dark text-white p-5 rounded">
       <h5>BUILD SUMMARY</h5>
       <canvas id="radarChart" width="300" height="10"></canvas>
@@ -86,11 +85,9 @@
       </ul>
     </div>
 
-    <!-- Right Panel: Component Selector -->
     <div class="col-md-8 mb-4">
       <h4>Select Your Components</h4>
       
-      <!-- CPU -->
       <div class="form-group mb-4 mt-4">
         <label for="cpuSelect" class="form-label">Processor</label>
         <select class="form-select" id="cpuSelect" onchange="updateSelection('cpu')" required>
@@ -98,7 +95,6 @@
           <option value="AMD RYZEN 3 3200G" data-price="4648">AMD RYZEN 3 3200G - ₱4,648</option>
           <option value="AMD Ryzen 5" data-price="5000">AMD RYZEN 5 5600 - ₱5,000</option>
           <option value="AMD RYZEN 5 5600X" data-price="5599">AMD RYZEN 5 5600X - ₱5,599</option>
-          <option value="AMD RYZEN 7 5600GT" data-price="5648">AMD RYZEN 7 5600GT - ₱5,648</option>
           <option value="AMD RYZEN 5 5600G" data-price="6500">AMD RYZEN 5 5600G - ₱6,500</option>
           <option value="AMD RYZEN 5 5600GT " data-price="6999">AMD RYZEN 5 5600GT - ₱6,999</option>
           <option value="AMD RYZEN 5 8400F" data-price="7548">AMD RYZEN 5 8400F - ₱7,548</option>
@@ -109,7 +105,6 @@
         </select>
       </div>
 
-      <!-- GPU -->
       <div class="form-group mb-3">
         <label for="gpuSelect" class="form-label">Graphics Card</label>
         <select class="form-select" id="gpuSelect" onchange="updateSelection('gpu')" required>
@@ -128,12 +123,12 @@
         </select>
       </div>
 
-      <!-- RAM -->
+
       <div class="form-group mb-3">
         <label for="ramSelect" class="form-label">RAM</label>
         <select class="form-select" id="ramSelect" onchange="updateSelection('ram')" required>
           <option value="" data-price="0">-- Select RAM --</option>
-          <option value="Kingston 8GB DDR4 2000 mhz" data-price="750">Kingston 8GB DDR4 2000 mhz 1  - ₱700</option>
+          <option value="Kingston 8GB DDR4 2400 mhz" data-price="750">Kingston 8GB DDR4 2400 mhz 1  - ₱700</option>
           <option value="Kingston 8GB DDR4 2600 mhz" data-price="850">Kingston 8GB DDR4 2600 mhz 1  - ₱850</option>
           <option value="Lexar 8GB DDR4 3200 mhz" data-price="1000">Lexar 8GB DDR4 3200 mhz 1  - ₱1,000</option>
           <option value="T-Force RGB 8GB DDR4 3200" data-price="1500">T-Force RGB 8GB DDR4 3200 mhz 1  - ₱1,500</option>
@@ -222,8 +217,8 @@
         <p>You need to SignIn first.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <a href="../Authentication/signIn/login.php" class="btn btn-danger">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+        <a href="../Authentication/signIn/login.php" class="btn btn-success">
                         <i class="bi bi-check-lg me-2"></i>Sign In
                     </a>
       </div>
@@ -242,8 +237,8 @@
         <p>Your progress won't be saved, Are you sure?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <a href="../guest/index.php" class="btn btn-danger">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+        <a href="../guest/index.php" class="btn btn-success">
                         <i class="bi bi-check-lg me-2"></i>Back to Main
                     </a>
       </div>

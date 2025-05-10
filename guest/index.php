@@ -62,7 +62,7 @@
     <a class="nav-link text-dark" href="computers.php">Computers</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link text-dark" href="#">Price List</a>
+    <a class="nav-link text-dark" href="priceList.php">Price List</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled text-dark" aria-disabled="true">Disabled</a>
