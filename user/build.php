@@ -1,14 +1,37 @@
+<?php
+require_once '../database/database.php';
+
+session_start();
+// Database connection
+$db_host = "127.0.0.1";
+$db_username = "root";
+$db_password = "";
+$db_name = "peasy";
+$db_port = 3306;
+
+$conn = new mysqli($db_host, $db_username, $db_password, $db_name, $db_port);
+$conn = getDBConnection();
+$user_id = $_SESSION['user_id'] ?? '';
+$firstname = $_SESSION['user_firstname'] ?? 'Guest';
+$lastname = $_SESSION['user_lastname'] ?? 'Guest';
+$username = $_SESSION['user_username'] ?? 'Guest';
+$email = $_SESSION['user_email'] ?? 'Guest';
+$_SESSION['profile_picture'] = $_SESSION['profile_picture'] ?? 'default.jpg';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Peasy </title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="../main/profile.js">
+    <link rel="stylesheet" href="../guest/index.css">
+    <link rel="stylesheet" href="profile.js">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
 </head>
 <body> 
 <nav class="navbar navbar-expand-lg bg-success px-4 py-2">
@@ -32,16 +55,21 @@
         <li class="nav-item mx-2">
           <a class="nav-link text-white" href="#"><i class="bi bi-chat-left fs-4"></i></a>
         </li>
-        <li class="nav-item mx-2">
-          <button class="nav-link text-white d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#signInModal">
-            <i class="bi bi-person-circle fs-5 me-1"></i> <span>Login</span>
-          </button>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white d-flex align-items-center" href="../register/create.php">
-            <i class="bi bi-person-plus fs-5 me-1"></i> <span>Register</span>
-          </a>
-        </li>
+        <li class="nav-item mx-2 ">
+                        <a class="nav-link text-white d-flex align-items-center just"
+                            href="<?php echo isset($_SESSION['user_logged_in']) ? 'profile.php' : 'profile.php'; ?>">
+                            <i class="bi bi-person-circle fs-4 mx-2"></i>
+                            <span>
+                                <?php
+            if (isset($_SESSION['user_logged_in']) && isset($_SESSION['user_firstname'])) {
+                echo htmlspecialchars($_SESSION['user_firstname']);
+            } else {
+                echo 'Login';
+            }
+            ?>
+                            </span>
+                        </a>
+                    </li>
       </ul>
     </div>
   </div>
@@ -49,10 +77,10 @@
 
 <ul class="nav fs-5 align-items-center justify-content-center nav-pills" id="pills-tab pills-success" role="tablist" style="margin-top: 8px;">
   <li class="nav-item">
-    <a class="nav-link text-dark" href="index.php" data-bs-toggle="modal" data-bs-target="#mainModal">Home</a>
+    <a class="nav-link text-dark" href="../user/index.php" data-bs-toggle="modal" data-bs-target="#mainModal">Home</a>
   </li>
   <li class="nav-item nav-pills">
-    <a class="nav-link active bg-success text-white" aria-current="page" href="build.php">Build A PC</a>
+    <a class="nav-link active bg-success text-white" aria-current="page" href="../user/build.php">Build A PC</a>
   </li>
   <li class="nav-item">
     <a class="nav-link text-dark" href="laptops.php">Laptops</a>
@@ -199,32 +227,13 @@
       </div>
       <div class="mt-4 text-end">
         <h5 class="text-start">Total: ₱<span id="totalPrice">0.00</span></h5>
-        <button class="btn btn-secondary w-25 fs-5 mt-4" data-bs-toggle="modal" data-bs-target="#signInModal">Add To Cart</button>
-        <button class="btn btn-success w-25 fs-5 mt-4"data-bs-toggle="modal" data-bs-target="#signInModal">Buy Now</button>
+        <button class="btn btn-secondary w-25 fs-5 mt-4">Add To Cart</button>
+        <button class="btn btn-success w-25 fs-5 mt-4">Buy Now</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="signInModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Login</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>You need to SignIn first.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-        <a href="../Authentication/signIn/login.php" class="btn btn-success">
-                        <i class="bi bi-check-lg me-2"></i>Sign In
-                    </a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="modal fade" id="mainModal" tabindex="-1">
   <div class="modal-dialog">
@@ -238,8 +247,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-        <a href="../guest/index.php" class="btn btn-success">
-                        <i class="bi bi-check-lg me-2"></i>Back to Main
+        <a href="index.php" class="btn btn-success">
+                        <i class="bi bi-check-lg me-2"></i>Back to Home
                     </a>
       </div>
     </div>

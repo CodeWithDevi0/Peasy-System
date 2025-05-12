@@ -287,7 +287,7 @@
             <hr>
             <p class="text-center mb-0">&copy; 2025 PEasy. All rights reserved.</p>
         </div>
-    </footer>
+</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -49,20 +49,20 @@
 
 <!--navigation ni boss-->
 <ul class="nav fs-5 justify-content-center mt-2">
-  <li class="nav-item nav-pills ">
-    <a class="nav-link active bg-success" aria-current="page" href="../guest/index.php">Home</a>
+  <li class="nav-item">
+    <a class="nav-link text-dark" aria-current="page" href="../guest/index.php">Home</a>
   </li>
   <li class="nav-item">
     <a class="nav-link text-dark" href="../guest/build.php">Build A PC</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-dark" href="#">Laptops</a>
+  <li class="nav-item nav-pills">
+    <a class="nav-link active bg-success" href="laptops.php">Laptops</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link text-dark" href="#">Computers</a>
+    <a class="nav-link text-dark" href="computers.php">Computers</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link text-dark" href="#">Price List</a>
+    <a class="nav-link text-dark" href="priceList.php">Price List</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled text-dark" aria-disabled="true">Disabled</a>
@@ -104,3 +104,46 @@
   </button>
 </div>
 </div>
+
+<div class="kunwari-IT text-center">
+  <p class="fs-1">
+    Under constructions pani boss (wala pa natagaag budget sa national)
+  </p>
+  <p class="fs-2 text-dark">ikawparin
+  </p>
+</div>
+
+<footer class="bg-dark text-white py-4 mt-5 m" >
+        <div class="container" style="margin-top: 5%;">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>PEasy</h5>
+                    <p>Your one-stop shop for all your needs.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">About Us</a></li>
+                        <li><a href="#" class="text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Connect With Us</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2025 PEasy. All rights reserved.</p>
+        </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>

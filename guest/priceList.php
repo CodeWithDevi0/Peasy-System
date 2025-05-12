@@ -25,18 +25,18 @@
     <body> 
     <nav class="navbar navbar-expand-lg bg-success px-4 py-2">
     <div class="container-fluid">
-        <!-- Logo and Brand -->
+
+    
         <a class="navbar-brand d-flex align-items-center text-white" href="#">
         <img src="../assets/nobg.png" alt="Logo" width="60" height="60" class="me-2">
         <strong>PEasy</strong>
         </a>
 
-        <!-- Toggler for mobile -->
+
         <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Right Nav Icons -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav align-items-center">
             <li class="nav-item mx-2">
@@ -61,7 +61,6 @@
     </nav>
     
 
-    <!--navigation ni boss-->
     <ul class="nav fs-5 justify-content-center mt-2">
     <li class="nav-item nav-pills ">
         <a class="nav-link text-dark" href="../guest/index.php">Home</a>
@@ -70,13 +69,13 @@
         <a class="nav-link text-dark" href="../guest/build.php">Build A PC</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" href="#">Laptops</a>
+        <a class="nav-link text-dark" href="laptops.php">Laptops</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" href="#">Computers</a>
+        <a class="nav-link text-dark" href="computers.php">Computers</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active text-white bg-success" aria-current="page" href="#">Price List</a>
+        <a class="nav-link active text-white bg-success" aria-current="page" href="priceList.php">Price List</a>
     </li>
     <li class="nav-item">
         <a class="nav-link disabled text-dark" aria-disabled="true">Disabled</a>
@@ -87,7 +86,7 @@
 
 
     <div class="container my-4">
-    <!-- carousel here -->
+ 
 
 
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -489,5 +488,7 @@
             <p class="text-center mb-0">&copy; 2025 PEasy. All rights reserved.</p>
         </div>
     </footer>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
